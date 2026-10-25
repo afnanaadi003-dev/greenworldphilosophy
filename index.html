@@ -61,6 +61,8 @@ main{max-width:1180px;margin:auto;padding:0 24px}
 .card h3{font-size:1.02rem;line-height:1.35;margin:2px 0 0}
 .swap{font-size:.93rem;color:var(--ink);padding:11px 12px;border-radius:12px;background:#f5f8f1;margin-top:auto !important}
 .swap strong{color:var(--leaf)}
+.why{font-size:.9rem;color:var(--muted);margin:0;line-height:1.5}
+.why strong{color:#a1532e}
 .countline{font-weight:800;color:var(--leaf);margin:14px 0 18px;font-size:.95rem}
 .loadwrap{text-align:center;margin:26px 0 0}
 .loadwrap .btn{background:var(--forest);color:#fff}
@@ -312,6 +314,164 @@ const CAT_WHY = {
  Clothes:"Longer-wearing natural fabrics mean less dye pollution, fewer microplastics in waterways, and less landfill.",
  Waste:"Sorting, composting, and recycling turn thrown-away things into resources instead of smoke, toxins, and leachate."};
 
+/* Unique problem text for each of the 100 harmful things */
+const HARMS_PROBLEM = {
+"bleach-based household cleaners":"Bleach fumes sting lungs and turn to toxic gas if mixed with other cleaners.",
+"ammonia-based glass cleaners":"Ammonia fumes burn eyes and airways and are harmful around pets and children.",
+"toxic chemical pesticide sprays":"These sprays poison bees, birds, and pets, and leave residue where food grows.",
+"chemical weed killer":"Weed killer washes off soil into streams and lingers where children and pets play.",
+"toxic rat poison baits":"Rat poison kills the owls, cats, and foxes that eat the poisoned rodents too.",
+"acidic drain cleaners":"Acid cleaners burn skin through thin gloves and eat away old pipes.",
+"aerosol air fresheners":"Aerosols mask smells with volatile chemicals that you then breathe in for hours.",
+"naphthalene moth balls":"Moth balls let off fumes that are harmful indoors, especially around small children.",
+"chemical mosquito coils":"One burning coil fills a room with smoke like many cigarettes.",
+"lead-based paints and primers":"Lead paint dust damages nervous systems, with growing children most at risk.",
+"formaldehyde-based synthetic glue":"Formaldehyde glue slowly off-gasses into airtight rooms as a known irritant.",
+"oil-based paint and chemical thinners":"Oil paints and thinners release solvent fumes and end up as toxic household waste.",
+"single-use plastic bags":"A bag used for minutes can persist for centuries, tangling waterways and wildlife.",
+"plastic drinking straws":"Straws are too small to recycle and end up inside sea animals.",
+"disposable plastic bottles":"Most bottles leach microplastic into drinks and hardly ever get recycled.",
+"plastic cling wrap":"Cling wrap is born single-use and hard to recycle, yet wraps the food you eat.",
+"disposable plastic cutlery":"Cutlery is thrown away after one meal yet lasts for hundreds of years.",
+"disposable plastic cups":"Party cups pile up as landfill after only a few minutes of use.",
+"foam polystyrene take-away boxes":"Foam boxes crumble into beads that birds and fish mistake for food.",
+"disposable plastic toothbrushes":"A lifetime of brushes ends as a small mountain of landfill plastic.",
+"plastic storage containers":"Worn containers shed microplastic into the food and drink you store.",
+"plastic scrub sponges":"Plastic sponges shed microfibres that rinse straight into rivers.",
+"plastic plant and garden pots":"Pots crack in the sun and pile up in garden waste that rarely recycles.",
+"plastic shower curtains":"Cheap curtains off-gas a strong chemical smell into the bathroom air.",
+"single-serve plastic sachets":"Sachets are the least-recycled plastic on Earth, littering billions each year.",
+"plastic toys":"Broken toys rarely recycle and stay in the ground for centuries.",
+"cutting trees for paper":"Paper demand uproots forests that need a human lifetime to grow back.",
+"clear-cut deforestation logging":"Clear-cutting erases whole ecosystems at once, from canopy to soil life.",
+"virgin-wood office paper":"Every fresh page begins as a tree that could have kept standing.",
+"tree-cutting for packaging boxes":"Forests are felled for boxes that sit in homes for only days.",
+"cutting trees for charcoal fuel":"Charcoal demand slowly strips dryland forests across whole regions.",
+"wood-burning cooking stoves":"Open wood fires fill lungs with smoke and send trees into the air.",
+"slash-and-burn land clearing":"Burned land loses its fertile topsoil within a few harvests.",
+"old-growth tree felling":"Old trees hold centuries of carbon and cannot be replaced in one lifetime.",
+"illegal timber trade":"Illegal logging strips the forests people rely on for water, shade, and their future.",
+"virgin-wood tissue paper":"Softest-tissue demand turns tall trees into a product used in seconds.",
+"mangrove cutting for aquaculture ponds":"Cut mangroves remove the shield that protects coasts from storms and floods.",
+"tree-cutting for city road expansion":"Cutting city trees removes the free shade and rain that cool streets.",
+"virgin-wood tables and chairs":"New furniture from fresh timber keeps the chainsaws running through living forests.",
+"solid hardwood bed frames":"A hardwood bed consumes wood that took a century to grow.",
+"plywood and particle-board cabinets":"Glued boards hold sawdust and formaldehyde inside the rooms you breathe in.",
+"tropical hardwood decking":"Tropical decking pressures rainforests for a garden used only a few years.",
+"old-growth timber flooring":"Ancient timber flooring began growing long before anyone alive was born.",
+"wooden window and door frames":"Frames from fresh stock weather out far faster than the forest regrew.",
+"wooden railway sleepers":"Sleepers soak in creosote that leaches into the ground when they are replaced.",
+"hardwood kitchen boards and tools":"Kitchenware from rare hardwoods wears out faster than the trees regrew.",
+"disposable pallets and crates":"Pallets often make a single trip, then rot or burn by the roadside.",
+"fresh-wood garden benches":"Garden benches left to the weather crack away their years of growth in seasons.",
+"chemically treated poles and posts":"Treated posts leach wood-preserving chemicals into farm and garden soil.",
+"tarred wooden boat hulls":"Old hulls flake tar and paint into harbours, storm by storm.",
+"cement-based concrete":"Making cement releases close to eight percent of global CO2.",
+"coal-fired kiln bricks":"Brick kilns burn coal into smoke that darkens whole valley skies.",
+"high-emission steel structures":"A steel frame carries the furnace's fossil carbon inside every beam.",
+"bitumen-asphalt paving":"Asphalt seals the ground so rain cannot soak in, feeding city floods.",
+"glass curtain-wall towers":"Glass towers trap heat and burn electricity for cooling all summer.",
+"oil-based foam insulation panels":"Foam panels come from oil, rarely recycle, and can produce toxic smoke in fires.",
+"high-VOC indoor paints":"Fresh-paint fumes are volatile chemicals you breathe indoors for weeks.",
+"mined gypsum plasterboard":"Plasterboard is torn out and landfilled at almost every refurbishment.",
+"sand-mined concrete aggregates":"Sand mining drains riverbeds faster than any other material demand.",
+"car-dependent urban sprawl":"Sprawl burns fuel on every trip while eating up nearby farmland.",
+"sleeping pills as a nightly habit":"Nightly pills can build dependence and groggy mornings — always involve your clinician first.",
+"foam synthetic pillows":"Foam pillows flatten fast and shed plastic microfibre into your air.",
+"bright bedside night-lights":"Bright light at the bed delays the melatonin that helps you drift off.",
+"late-afternoon caffeine":"Late caffeine keeps half of itself circulating in you at bedtime.",
+"pre-bed screen time":"Screens before bed tell the brain it is still daytime and hold sleep back.",
+"alcohol as a sleep aid":"Alcohol knocks you out early but breaks the second half of the night.",
+"electric heated blankets":"Electric blankets run energy all night and can overheat deep sleep.",
+"coal-fired grid electricity":"Coal power carries the heaviest carbon and ash load of any electricity.",
+"petrol-guzzling cars":"A hungry engine burns money and emits smoke on every trip.",
+"diesel generators":"Diesel generators idle out black fumes into neighbourhoods for hours.",
+"incandescent bulbs":"Old bulbs spend ninety percent of their power on heat instead of light.",
+"over-cooling air conditioners":"Over-cooled rooms spike peak power and waste cold you never asked for.",
+"gas water heaters":"Gas heating burns fuel all night for a few minutes of hot water.",
+"disposable dry-cell batteries":"Binned batteries leak acid and heavy metals into soil and water.",
+"half-hour hot showers":"Long hot showers wash away clean water plus the energy that heated it.",
+"hose-pipe lawn watering":"Hose spray dries in the sun, wasting half the water before roots drink.",
+"bottled drinking water":"Bottled water hauls heavy plastic around, sometimes filled with plain tap.",
+"leaking taps and pipes":"One dripping tap can waste thousands of litres of clean water a year.",
+"chemical laundry detergents":"Detergent washes off into rivers, where foam and phosphates choke aquatic life.",
+"chemical toilet cleaners":"Strong toilet acids corrode pipes and poison the plants that treat water downstream.",
+"synthetic nitrogen fertilizers":"Gas-made fertiliser runoff burns soil life and blooms algae in rivers.",
+"food waste and spoilage":"Every wasted meal also wastes the water, soil, fuel, and work that made it.",
+"factory-farmed industrial meat":"Industrial meat carries heavy water, feed, and emission costs per kilo.",
+"over-packaged convenience food":"Convenience food buries a few bites inside layers of packaging film.",
+"synthetic food preservatives":"Long-life preservatives replace the freshness that simple natural keeping offers.",
+"imported out-of-season produce":"Out-of-season imports arrive wearing the jet fuel that carried them.",
+"coffee grounds binned as waste":"Coffee grounds binned are a rich free fertiliser thrown into the garbage.",
+"kitchen peels sent to landfill":"Peels rot in landfill as methane instead of composting into garden soil.",
+"polyester fast fashion":"Polyester sheds microplastic with every wash and outlives every trend.",
+"single-wear disposable trends":"Outfits worn once cost the fabric, water, dye, and shipping of many.",
+"chemical fabric dyes":"Dye baths drain concentrated colour and toxins into rivers near factories.",
+"non-biodegradable shoe soles":"Thrown-away soles linger in gutters and soil for hundreds of years.",
+"chemical fabric softeners":"Softeners coat fabric and skin with perfumes that barely biodegrade.",
+"plastic raincoats and ponchos":"Ponchos crack after one season then never break down at all.",
+"open burning of garbage":"Open fires release dioxins and smoke straight into lungs and skies.",
+"unsorted landfill waste":"Unsorted bins bury metals, glass, and good plastics that could serve again.",
+"discarded e-waste gadgets":"Binned gadgets leak lead and mercury into the ground near homes.",
+"cigarette-butt litter":"Each filter carries plastic fibres and nicotine into every drain it reaches.",
+"disposable nappies":"A single baby's nappies pile up tons of mixed plastic no plant can sort.",
+"disposable party supplies":"Partyware used for hours can outlast the party by centuries."};
+
+/* Unique benefit text for each of the 50 green swaps */
+const SWAP_BENEFIT = {
+"reusable cotton cloth":"washed and used again and again, it replaces whole piles of throwaways.",
+"bamboo craft":"grows back fast enough to keep forests standing.",
+"woven jute fibre":"carries heavy loads in farm-grown fibre that returns to the soil.",
+"flexible hemp fibre":"grows quickly with little water and no plastic.",
+"pure linen":"breathes, lasts for years, and goes back to the earth at the end.",
+"coconut coir":"turns discarded husks into strong biodegradable material.",
+"terracotta clay":"shapes ordinary earth into vessels that neither stain nor smell.",
+"natural stone":"holds strength that outlives generations without off-gassing anything.",
+"rammed earth":"builds thick walls from the ground itself, without kilns or cladding.",
+"recycled cardboard":"gives old paper a second day instead of felling a new tree.",
+"recycled paper":"keeps the forest standing by letting pages come back again.",
+"refashioned upcycled":"turns what is worn into something better without new material.",
+"mycelium-grown":"grows in days and returns to the soil in weeks.",
+"seaweed-based":"grows in the sea with no soil, no fresh water, and no plastic.",
+"beeswax-coated":"wraps food naturally, again and again.",
+"natural latex":"springs back for years and comes tapped from trees.",
+"organic cotton":"grows without the pesticide load of ordinary cotton fields.",
+"bamboo charcoal":"absorbs smells and damp without a single chemical spray.",
+"neem and botanical plant":"shields garden and skin with plants that break down harmlessly.",
+"vinegar and baking soda":"dissolves grime with safe kitchen basics instead of fumes.",
+"steam-based":"lifts dirt with nothing more than heat and water.",
+"microfibre cloth-based":"cleans deep with water alone, no spray necessary.",
+"electric-powered":"runs clean and quiet where the work happens.",
+"solar-powered":"draws its power from the sun already hitting your roof.",
+"hand-powered manual":"spends your muscle instead of fuel, and needs no engine.",
+"wind-powered":"harnesses the wind that arrives free every day.",
+"LED-based":"uses a tenth of the power and lasts for decades.",
+"water-saving":"cuts the flow you never needed while doing the same job.",
+"low-VOC safe":"keeps sharp fumes out of the air you breathe indoors.",
+"recycled-content certified":"proves its material came back instead of being mined again.",
+"lifetime durable":"is built to be repaired, not to be thrown away.",
+"modular repairable":"lets you fix the broken part instead of the whole thing.",
+"compostable plant-based":"returns to the soil instead of sitting in landfill.",
+"refillable":"uses one package for years of the same content.",
+"second-hand":"keeps a working thing working instead of making a double.",
+"borrowed from a library of things":"gives you the tool without a lifetime of storing it.",
+"shared community":"lets one well-made item serve many neighbours.",
+"locally sourced":"skips the freight miles and supports nearby hands.",
+"artisan handmade":"carries real craft instead of mass-made shortcuts.",
+"digital paperless":"does the paperwork without cutting down one tree.",
+"consciously refused":"needs nothing at all — the greenest thing you cannot buy.",
+"grow-it-yourself":"grows fresh with no packaging and no fuel miles.",
+"community garden":"feeds a whole street from one sunny patch.",
+"second-life upcycled":"finds a new useful job for what already exists.",
+"take-back recyclable":"returns to a real recycling loop instead of a bin.",
+"glass container":"keeps food pure, adds no taste, and recycles forever.",
+"stainless steel":"outlives plastic many times over and recycles easily.",
+"aluminium":"recycles with a small fraction of first-run energy.",
+"ceramic":"fires earth into damage-proof everyday beauty.",
+"refill-and-reuse system":"turns throwaway into a refill routine that ends disposables."};
+
+const CTX_SUBJ = {home:"the home",kitchen:"the kitchen",garden:"the garden",school:"school",office:"the office",workshop:"the workshop",bathroom:"the bathroom",bedroom:"the bedroom",travel:"travel",farm:"the farm"};
+
 const CAT_ORDER = ["Trees","Poison","Plastic","Wood","Buildings","Sleep","Energy","Water","Food","Clothes","Waste"];
 
 /* Build the full 50,000-entry library */
@@ -324,7 +484,7 @@ const LIBRARY = [];
       for (let x = 0; x < CONTEXTS.length; x++) {
         num++;
         const e = {num:num, harm:harm.n, cat:harm.c, swap:SWAPS[s], ctx:CONTEXTS[x]};
-        e.text = (harm.n + " " + SWAPS[s] + " " + CONTEXTS[x] + " " + harm.c).toLowerCase();
+        e.text = (harm.n + " " + SWAPS[s] + " " + CONTEXTS[x] + " " + harm.c + " " + (HARMS_PROBLEM[harm.n] || "") + " " + (SWAP_BENEFIT[SWAPS[s]] || "")).toLowerCase();
         LIBRARY.push(e);
       }
     }
@@ -455,7 +615,8 @@ function card(e){
   cardBox.innerHTML = '<div class="thumb" role="img" aria-label="Illustration: ' + esc(e.swap) + ' alternative instead of ' + esc(e.harm) + '">' + cardArt(e) + '</div>'
     + '<div class="card-top"><span class="tag">' + esc(e.cat) + '</span><span class="num">#' + e.num.toLocaleString('en-US') + ' of ' + TOTAL.toLocaleString('en-US') + '</span></div>'
     + '<h3>Instead of ' + esc(e.harm) + '</h3>'
-    + '<p class="swap"><strong>Try:</strong> ' + esc(e.swap) + ' alternative — for ' + esc(e.ctx) + '.</p>';
+    + '<p class="why"><strong>Why it harms:</strong> ' + esc(HARMS_PROBLEM[e.harm] || '') + '</p>'
+    + '<p class="swap"><strong>Better: ' + esc(e.swap) + ' for ' + esc(CTX_SUBJ[e.ctx] || e.ctx) + '</strong> — ' + esc(SWAP_BENEFIT[e.swap] || '') + '</p>';
   cardBox.addEventListener('click', function(){ openModal(e); });
   cardBox.addEventListener('keydown', function(ev){
     if (ev.key === 'Enter' || ev.key === ' ') { ev.preventDefault(); openModal(e); }
@@ -515,6 +676,7 @@ modal.innerHTML = '<div class="modal-box" role="dialog" aria-modal="true" aria-l
   + '<div class="card-top"><span class="tag" id="mTag"></span><span class="num" id="mNum"></span></div>'
   + '<h2 id="mTitle"></h2>'
   + '<div class="m-sec"><span class="m-label">Instead of</span><p class="m-value" id="mHarm"></p></div>'
+  + '<div class="m-sec"><span class="m-label">The problem</span><p class="m-value" id="mProb"></p></div>'
   + '<div class="m-sec"><span class="m-label">Try this instead</span><p class="m-value" id="mSwap"></p></div>'
   + '<div class="m-sec"><span class="m-label">Where</span><p class="m-value"><span class="place" id="mPlace"></span></p></div>'
   + '<div class="m-sec"><span class="m-label">Why it helps</span><p class="m-value" id="mWhy"></p></div>'
@@ -530,7 +692,8 @@ function openModal(e){
   document.getElementById('mNum').textContent = '#' + e.num.toLocaleString('en-US') + ' of ' + TOTAL.toLocaleString('en-US');
   document.getElementById('mTitle').textContent = 'Instead of ' + e.harm;
   document.getElementById('mHarm').textContent = e.harm.charAt(0).toUpperCase() + e.harm.slice(1) + '.';
-  document.getElementById('mSwap').innerHTML = '<strong>' + esc(e.swap.charAt(0).toUpperCase() + e.swap.slice(1)) + '</strong> — a greener way to do the same job.';
+  document.getElementById('mProb').textContent = HARMS_PROBLEM[e.harm] || '';
+  document.getElementById('mSwap').innerHTML = '<strong>' + esc(e.swap.charAt(0).toUpperCase() + e.swap.slice(1)) + '</strong> — ' + esc(SWAP_BENEFIT[e.swap] || '');
   document.getElementById('mPlace').textContent = e.ctx.charAt(0).toUpperCase() + e.ctx.slice(1);
   document.getElementById('mWhy').textContent = CAT_WHY[e.cat] || '';
   const chips = document.getElementById('mChips');

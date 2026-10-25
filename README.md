@@ -27,6 +27,7 @@ The library is generated live in the browser from three editable lists in `index
 ## Features
 - A unique generative SVG illustration on every one of the 50,000 cards (seeded from category + harmful thing + swap + place, themed per category — trees, poison, sleep, buildings…)
 - Clickable cards: a keyboard-accessible detail dialog with a large illustration, copy button, listen-aloud button, topic search, and chips to try all 50 swaps for the same harmful thing
+- Necessary text on every card, all different: a unique "why it harms" explanation for each of the 100 harmful things plus a unique benefit line for each of the 50 swaps, combined per card with its place so no two card texts repeat
 - Mission, vision, and philosophy sections
 - Searchable 50,000-alternative library with category filters, A–Z sorting, and load-more paging
 - Responsive mobile layout
