@@ -1,0 +1,385 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="GreenWorld: a philosophy of mission and vision for a greener planet, with a library of 50,000 green alternatives — to poison, plastic, cutting trees, buildings, wood furniture, beds, sleeping pills and more.">
+<title>GreenWorld — 50,000 Green Alternatives</title>
+<style>
+:root{--forest:#123d2b;--leaf:#28734a;--lime:#c6ed87;--cream:#f6f5ed;--ink:#1e2b22;--muted:#657368;--card:#fff;--line:#dce5d9}
+*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:var(--cream);color:var(--ink);font-family:Inter,ui-sans-serif,system-ui,-apple-system,"Segoe UI",sans-serif;line-height:1.6}
+a{color:inherit}
+.nav{position:sticky;top:0;z-index:5;background:rgba(18,61,43,.97);color:#fff;display:flex;align-items:center;justify-content:space-between;padding:14px max(5vw,20px);gap:20px}
+.brand{font-weight:900;letter-spacing:.08em;font-size:1.15rem;text-decoration:none}
+.brand span{color:var(--lime)}
+nav{display:flex;gap:20px;flex-wrap:wrap}
+nav a{text-decoration:none;font-size:.92rem;color:#e9f4e9}
+nav a:hover{color:var(--lime)}
+.hero{background:radial-gradient(circle at 85% 25%,#4f9b5d 0,transparent 28%),linear-gradient(120deg,#102f23,#1f6542);color:#fff;padding:84px max(7vw,24px) 74px;position:relative;overflow:hidden}
+.hero:after{content:"✳";position:absolute;right:6%;bottom:-110px;font-size:24rem;line-height:1;color:#ffffff0a;pointer-events:none}
+.eyebrow{text-transform:uppercase;letter-spacing:.18em;font-size:.78rem;color:var(--lime);font-weight:800}
+.hero h1{font-size:clamp(2.7rem,7vw,6rem);line-height:.99;max-width:900px;letter-spacing:-.055em;margin:18px 0 22px}
+.hero h1 em{font-style:normal;color:var(--lime)}
+.hero p{max-width:700px;color:#e1eee3;font-size:1.1rem}
+.actions{display:flex;gap:12px;flex-wrap:wrap;margin-top:26px}
+.btn{border:0;border-radius:999px;padding:13px 20px;font-weight:800;cursor:pointer;text-decoration:none;display:inline-flex;align-items:center;justify-content:center;gap:8px;font:inherit}
+.btn.primary{background:var(--lime);color:var(--forest)}
+.btn.ghost{border:1px solid #ffffff66;color:#fff;background:transparent}
+.bigcount{margin-top:30px;display:inline-flex;align-items:baseline;gap:14px;background:#ffffff14;border:1px solid #ffffff2b;border-radius:18px;padding:14px 22px}
+.bigcount b{font-size:clamp(1.9rem,4.5vw,3rem);color:var(--lime);line-height:1;letter-spacing:-.03em}
+.bigcount span{font-size:.86rem;color:#d9e8dc;max-width:260px;line-height:1.4}
+main{max-width:1180px;margin:auto;padding:0 24px}
+.section{padding:70px 0}
+.section-head{display:flex;justify-content:space-between;align-items:end;gap:25px;margin-bottom:28px}
+.section h2{font-size:clamp(2rem,4vw,3.2rem);line-height:1.05;letter-spacing:-.04em;margin:8px 0 12px}
+.section-intro{max-width:650px;color:var(--muted)}
+.kicker{color:var(--leaf);text-transform:uppercase;letter-spacing:.15em;font-size:.75rem;font-weight:900}
+.pillars{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+.pillar,.card{background:var(--card);border:1px solid var(--line);border-radius:22px;padding:24px}
+.symbol{font-size:1.8rem}
+.pillar h3,.card h3{margin:12px 0 7px}
+.pillar p,.card p{color:var(--muted);margin:0}
+.manifesto{background:#e6eedf;border-radius:28px;padding:clamp(26px,5vw,56px);display:grid;grid-template-columns:1.1fr .9fr;gap:35px;align-items:center}
+.manifesto p{color:var(--muted)}
+.manifesto strong{color:var(--leaf)}
+.stats{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}
+.stat{padding:18px;border-radius:16px;background:#ffffffa8}
+.stat strong{display:block;font-size:1.35rem;color:var(--leaf)}
+.controls{display:flex;gap:12px;flex-wrap:wrap;margin:20px 0 22px}
+.controls input,.controls select{border:1px solid #cbd9ca;border-radius:14px;padding:13px 15px;background:white;font:inherit;color:var(--ink)}
+.controls input{flex:1;min-width:230px}
+.category-tabs{display:flex;gap:8px;flex-wrap:wrap;margin:0 0 22px}
+.tab{border:1px solid var(--line);border-radius:999px;background:white;padding:9px 14px;cursor:pointer;font-weight:700;color:var(--ink);font:inherit;font-size:.9rem}
+.tab.active{background:var(--forest);color:white;border-color:var(--forest)}
+.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:15px}
+.card{display:flex;flex-direction:column;gap:9px}
+.card-top{display:flex;justify-content:space-between;align-items:center;gap:10px}
+.tag{align-self:flex-start;background:#e8f3e3;color:#245b38;border-radius:999px;padding:4px 10px;font-size:.72rem;font-weight:800;white-space:nowrap}
+.num{font-size:.72rem;color:#9db0a2;font-weight:700;white-space:nowrap}
+.card h3{font-size:1.02rem;line-height:1.35;margin:2px 0 0}
+.swap{font-size:.93rem;color:var(--ink);padding:11px 12px;border-radius:12px;background:#f5f8f1;margin-top:auto !important}
+.swap strong{color:var(--leaf)}
+.countline{font-weight:800;color:var(--leaf);margin:14px 0 18px;font-size:.95rem}
+.loadwrap{text-align:center;margin:26px 0 0}
+.loadwrap .btn{background:var(--forest);color:#fff}
+.libnote{margin-top:34px;border-left:4px solid #d7a33d;background:#fff8e7;padding:16px 18px;border-radius:0 14px 14px 0;color:#5f4a1c}
+.steps{display:grid;grid-template-columns:repeat(4,1fr);gap:14px}
+.step{border-top:3px solid var(--leaf);padding:16px 8px}
+.step b{font-size:2rem;color:#9abb91}
+.step h3{margin:2px 0}
+.step p{color:var(--muted);font-size:.95rem;margin:0}
+.cta{background:var(--forest);color:white;border-radius:28px;padding:clamp(28px,5vw,55px);display:flex;justify-content:space-between;align-items:center;gap:24px}
+.cta h2{max-width:620px;margin:0}
+.cta p{color:#d9e8dc;max-width:560px;margin:0}
+.footer{background:#0b281c;color:#d7e4d9;margin-top:76px;padding:36px max(5vw,24px);display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap}
+.footer small{color:#a8c0ad}
+.toplink{color:var(--lime);text-decoration:none}
+#pledgeMessage{font-weight:800;margin-top:16px}
+@media(max-width:850px){.pillars,.grid{grid-template-columns:repeat(2,1fr)}.manifesto{grid-template-columns:1fr}.steps{grid-template-columns:repeat(2,1fr)}nav{gap:10px}.nav{align-items:flex-start;flex-direction:column}}
+@media(max-width:560px){.pillars,.grid,.steps{grid-template-columns:1fr}.hero{padding-top:60px}.section-head{display:block}.nav{position:relative}.cta{align-items:flex-start;flex-direction:column}}
+</style>
+</head>
+<body>
+<header class="nav">
+  <a class="brand" href="#home">GREEN<span>WORLD</span></a>
+  <nav aria-label="Main navigation">
+    <a href="#philosophy">Philosophy</a><a href="#mission">Mission & Vision</a><a href="#library">50,000 Alternatives</a><a href="#action">Take action</a>
+  </nav>
+</header>
+
+<section class="hero" id="home">
+  <div class="eyebrow">A living philosophy for a living planet</div>
+  <h1>Every poison has a<br><em>green alternative.</em></h1>
+  <p>GreenWorld is a practical movement to rethink the things we make, use, build, consume, and depend on. Instead of accepting poison, plastic, cutting trees, harmful buildings, glued wood elements, uncomfortable beds and sleeping pills as inevitable, we search out better alternatives — rooted in care for people, nature, and future generations.</p>
+  <div class="bigcount"><b id="totalBadge">50,000</b><span>green alternatives generated in this library — every one a real word of change.</span></div>
+  <div class="actions"><a class="btn primary" href="#library">Browse the library ↓</a><a class="btn ghost" href="#mission">Read our mission</a></div>
+</section>
+
+<main>
+<section class="section" id="philosophy">
+  <div class="section-head"><div><div class="kicker">01 / The philosophy</div><h2>Green is not a colour.<br>It is a responsibility.</h2></div><p class="section-intro">GreenWorld asks one simple question: can we meet a human need while causing less harm? Our answer is to research, test, improve, and share practical choices — not to promise that one material or technology can solve everything.</p></div>
+  <div class="pillars">
+    <article class="pillar"><div class="symbol">🌱</div><h3>Regenerate</h3><p>Protect living ecosystems, restore damaged land, save every tree we can, conserve water, and grow biodiversity instead of taking from nature faster than it can recover.</p></article>
+    <article class="pillar"><div class="symbol">♻️</div><h3>Rethink</h3><p>Reduce unnecessary consumption first. Repair, reuse, share, refill, and recycle so that plastic, poison and waste never become the default.</p></article>
+    <article class="pillar"><div class="symbol">🤝</div><h3>Include</h3><p>Greener choices should be safe, affordable, accessible, and fair to workers — from natural beds to calm, medicine-free sleep built on healthy habits.</p></article>
+  </div>
+</section>
+
+<section class="section" id="mission">
+  <div class="manifesto">
+    <div><div class="kicker">Our mission & vision</div><h2>Make the healthy choice easier to find.</h2>
+      <p><strong>Mission:</strong> build an open, ever-growing library of alternatives to every poison, every avoidable plastic, every felled tree, every polluting building material, every glued wood element, every chemical bed, and every sleeping pill — until the green option is the obvious option.</p>
+      <p><strong>Vision:</strong> a world where homes, cities, furniture, bedrooms, and daily habits are designed around human wellbeing and the long-term health of the planet — a GreenWorld with no poison left to replace.</p>
+      <p><strong>Promise:</strong> no miracle claims, no shame, and no greenwashing. We explain trade-offs and encourage people to verify local standards, safety, durability, and lifecycle impacts.</p></div>
+    <div class="stats"><div class="stat"><strong>Prevent</strong><span>Waste before it starts</span></div><div class="stat"><strong>Replace</strong><span>Harmful options thoughtfully</span></div><div class="stat"><strong>Restore</strong><span>Nature and community</span></div><div class="stat"><strong>Measure</strong><span>Real impact, not slogans</span></div></div>
+  </div>
+</section>
+
+<section class="section" id="library">
+  <div class="section-head"><div><div class="kicker">02 / The alternative library</div><h2 id="libTitle">50,000 green words.<br>One greener world.</h2></div><p class="section-intro">Search the full library below — from <strong>poison</strong> over cleaners, <strong>cutting trees</strong>, <strong>plastic</strong> elements, polluting <strong>buildings</strong>, glued <strong>wood</strong> elements, hard beds to <strong>sleeping pills</strong> — each card pairs a harmful thing with a greener alternative.</p></div>
+  <div class="controls">
+    <input id="search" type="search" placeholder="Search: bed, sleeping pill, poison, bamboo, tree…" aria-label="Search alternatives">
+    <select id="sort" aria-label="Sort alternatives"><option value="default">Library order</option><option value="az">A–Z by harmful thing</option></select>
+  </div>
+  <div class="category-tabs" id="tabs" aria-label="Category filters"></div>
+  <div class="countline" id="countline" role="status" aria-live="polite"></div>
+  <div class="grid" id="cards"></div>
+  <div class="loadwrap"><button class="btn" id="loadMore">Load 48 more</button></div>
+  <div class="libnote"><strong>How to use this library:</strong> the 50,000 combinations are generated in your browser from <strong>100 harmful things × 50 greener material & habit swaps × 10 everyday places</strong>. They are starting ideas to investigate, not universal prescriptions. Use the search box for your exact topic — try “bed”, “sleeping pill”, “poison”, “tree”, “building”, “wood”, or “plastic”.</div>
+  <div class="libnote" style="margin-top:14px"><strong>Important health note:</strong> GreenWorld does not recommend stopping prescribed medicines or replacing sleeping pills with home remedies without advice from a qualified clinician. For persistent insomnia, discuss evidence-based options such as cognitive behavioural therapy for insomnia (CBT-I). Natural does not automatically mean safe.</div>
+</section>
+
+<section class="section">
+  <div class="section-head"><div><div class="kicker">03 / A realistic pathway</div><h2>Progress, not perfection.</h2></div><p class="section-intro">A green future is built through better systems and repeatable decisions. Begin with the changes that prevent the most harm and are feasible in your community.</p></div>
+  <div class="steps"><div class="step"><b>01</b><h3>Refuse</h3><p>Question unnecessary purchases, packaging, and short-lived products.</p></div><div class="step"><b>02</b><h3>Reduce</h3><p>Use fewer resources through efficient design and thoughtful routines.</p></div><div class="step"><b>03</b><h3>Reuse & repair</h3><p>Extend product life and share items that are used only occasionally.</p></div><div class="step"><b>04</b><h3>Restore</h3><p>Support clean water, healthy soil, native habitats, and community action.</p></div></div>
+</section>
+
+<section class="section" id="action">
+  <div class="cta"><div><div class="kicker" style="color:var(--lime)">Join the movement</div><h2>Turn a green word into a practical change.</h2><p>Pick one alternative from the library and live it this week: refuse a throwaway item, protect a tree, switch a cleaner, soften a bedroom, rest a sleeping pill habit with a healthier routine (with your clinician's guidance).</p></div><button class="btn primary" id="pledge">＋ Make my pledge</button></div>
+  <p id="pledgeMessage" role="status" aria-live="polite"></p>
+</section>
+</main>
+
+<footer class="footer"><div><div class="brand">GREEN<span>WORLD</span></div><small>A philosophy of care, evidence, and practical alternatives.</small></div><div><a class="toplink" href="#home">Back to top ↑</a><br><small>Educational project · Verify claims and local standards before acting.</small></div></footer>
+
+<script>
+/* ============ GreenWorld 50,000-word alternative generator ============ */
+/* 100 harmful things × 50 greener swaps × 10 everyday places = 50,000  */
+
+const HARMS = [
+/* — Poison & harmful chemicals (12) — */
+{n:"bleach-based household cleaners",c:"Poison"},
+{n:"ammonia-based glass cleaners",c:"Poison"},
+{n:"toxic chemical pesticide sprays",c:"Poison"},
+{n:"chemical weed killer",c:"Poison"},
+{n:"toxic rat poison baits",c:"Poison"},
+{n:"acidic drain cleaners",c:"Poison"},
+{n:"aerosol air fresheners",c:"Poison"},
+{n:"naphthalene moth balls",c:"Poison"},
+{n:"chemical mosquito coils",c:"Poison"},
+{n:"lead-based paints and primers",c:"Poison"},
+{n:"formaldehyde-based synthetic glue",c:"Poison"},
+{n:"oil-based paint and chemical thinners",c:"Poison"},
+/* — Plastic (14) — */
+{n:"single-use plastic bags",c:"Plastic"},
+{n:"plastic drinking straws",c:"Plastic"},
+{n:"disposable plastic bottles",c:"Plastic"},
+{n:"plastic cling wrap",c:"Plastic"},
+{n:"disposable plastic cutlery",c:"Plastic"},
+{n:"disposable plastic cups",c:"Plastic"},
+{n:"foam polystyrene take-away boxes",c:"Plastic"},
+{n:"disposable plastic toothbrushes",c:"Plastic"},
+{n:"plastic storage containers",c:"Plastic"},
+{n:"plastic scrub sponges",c:"Plastic"},
+{n:"plastic plant and garden pots",c:"Plastic"},
+{n:"plastic shower curtains",c:"Plastic"},
+{n:"single-serve plastic sachets",c:"Plastic"},
+{n:"plastic toys",c:"Plastic"},
+/* — Cutting trees (12) — */
+{n:"cutting trees for paper",c:"Trees"},
+{n:"clear-cut deforestation logging",c:"Trees"},
+{n:"virgin-wood office paper",c:"Trees"},
+{n:"tree-cutting for packaging boxes",c:"Trees"},
+{n:"cutting trees for charcoal fuel",c:"Trees"},
+{n:"wood-burning cooking stoves",c:"Trees"},
+{n:"slash-and-burn land clearing",c:"Trees"},
+{n:"old-growth tree felling",c:"Trees"},
+{n:"illegal timber trade",c:"Trees"},
+{n:"virgin-wood tissue paper",c:"Trees"},
+{n:"mangrove cutting for aquaculture ponds",c:"Trees"},
+{n:"tree-cutting for city road expansion",c:"Trees"},
+/* — Wood elements, furniture & beds (12) — */
+{n:"virgin-wood tables and chairs",c:"Wood"},
+{n:"solid hardwood bed frames",c:"Wood"},
+{n:"plywood and particle-board cabinets",c:"Wood"},
+{n:"tropical hardwood decking",c:"Wood"},
+{n:"old-growth timber flooring",c:"Wood"},
+{n:"wooden window and door frames",c:"Wood"},
+{n:"wooden railway sleepers",c:"Wood"},
+{n:"hardwood kitchen boards and tools",c:"Wood"},
+{n:"disposable pallets and crates",c:"Wood"},
+{n:"fresh-wood garden benches",c:"Wood"},
+{n:"chemically treated poles and posts",c:"Wood"},
+{n:"tarred wooden boat hulls",c:"Wood"},
+/* — Buildings & construction (10) — */
+{n:"cement-based concrete",c:"Buildings"},
+{n:"coal-fired kiln bricks",c:"Buildings"},
+{n:"high-emission steel structures",c:"Buildings"},
+{n:"bitumen-asphalt paving",c:"Buildings"},
+{n:"glass curtain-wall towers",c:"Buildings"},
+{n:"oil-based foam insulation panels",c:"Buildings"},
+{n:"high-VOC indoor paints",c:"Buildings"},
+{n:"mined gypsum plasterboard",c:"Buildings"},
+{n:"sand-mined concrete aggregates",c:"Buildings"},
+{n:"car-dependent urban sprawl",c:"Buildings"},
+/* — Sleep & wellbeing (7) — */
+{n:"sleeping pills as a nightly habit",c:"Sleep"},
+{n:"foam synthetic pillows",c:"Sleep"},
+{n:"bright bedside night-lights",c:"Sleep"},
+{n:"late-afternoon caffeine",c:"Sleep"},
+{n:"pre-bed screen time",c:"Sleep"},
+{n:"alcohol as a sleep aid",c:"Sleep"},
+{n:"electric heated blankets",c:"Sleep"},
+/* — Energy (7) — */
+{n:"coal-fired grid electricity",c:"Energy"},
+{n:"petrol-guzzling cars",c:"Energy"},
+{n:"diesel generators",c:"Energy"},
+{n:"incandescent bulbs",c:"Energy"},
+{n:"over-cooling air conditioners",c:"Energy"},
+{n:"gas water heaters",c:"Energy"},
+{n:"disposable dry-cell batteries",c:"Energy"},
+/* — Water (6) — */
+{n:"half-hour hot showers",c:"Water"},
+{n:"hose-pipe lawn watering",c:"Water"},
+{n:"bottled drinking water",c:"Water"},
+{n:"leaking taps and pipes",c:"Water"},
+{n:"chemical laundry detergents",c:"Water"},
+{n:"chemical toilet cleaners",c:"Water"},
+/* — Food (8) — */
+{n:"synthetic nitrogen fertilizers",c:"Food"},
+{n:"food waste and spoilage",c:"Food"},
+{n:"factory-farmed industrial meat",c:"Food"},
+{n:"over-packaged convenience food",c:"Food"},
+{n:"synthetic food preservatives",c:"Food"},
+{n:"imported out-of-season produce",c:"Food"},
+{n:"coffee grounds binned as waste",c:"Food"},
+{n:"kitchen peels sent to landfill",c:"Food"},
+/* — Clothes (6) — */
+{n:"polyester fast fashion",c:"Clothes"},
+{n:"single-wear disposable trends",c:"Clothes"},
+{n:"chemical fabric dyes",c:"Clothes"},
+{n:"non-biodegradable shoe soles",c:"Clothes"},
+{n:"chemical fabric softeners",c:"Clothes"},
+{n:"plastic raincoats and ponchos",c:"Clothes"},
+/* — Waste (6) — */
+{n:"open burning of garbage",c:"Waste"},
+{n:"unsorted landfill waste",c:"Waste"},
+{n:"discarded e-waste gadgets",c:"Waste"},
+{n:"cigarette-butt litter",c:"Waste"},
+{n:"disposable nappies",c:"Waste"},
+{n:"disposable party supplies",c:"Waste"}
+];
+
+const SWAPS = [
+"reusable cotton cloth","bamboo craft","woven jute fibre","flexible hemp fibre","pure linen",
+"coconut coir","terracotta clay","natural stone","rammed earth","recycled cardboard",
+"recycled paper","refashioned upcycled","mycelium-grown","seaweed-based","beeswax-coated",
+"natural latex","organic cotton","bamboo charcoal","neem and botanical plant","vinegar and baking soda",
+"steam-based","microfibre cloth-based","electric-powered","solar-powered","hand-powered manual",
+"wind-powered","LED-based","water-saving","low-VOC safe","recycled-content certified",
+"lifetime durable","modular repairable","compostable plant-based","refillable","second-hand",
+"borrowed from a library of things","shared community","locally sourced","artisan handmade","digital paperless",
+"consciously refused","grow-it-yourself","community garden","second-life upcycled","take-back recyclable",
+"glass container","stainless steel","aluminium","ceramic","refill-and-reuse system"
+];
+
+const CONTEXTS = ["home","kitchen","garden","school","office","workshop","bathroom","bedroom","travel","farm"];
+
+const CAT_ORDER = ["Trees","Poison","Plastic","Wood","Buildings","Sleep","Energy","Water","Food","Clothes","Waste"];
+
+/* Build the full 50,000-entry library */
+const LIBRARY = [];
+(function build(){
+  let num = 0;
+  for (let h = 0; h < HARMS.length; h++) {
+    const harm = HARMS[h];
+    for (let s = 0; s < SWAPS.length; s++) {
+      for (let x = 0; x < CONTEXTS.length; x++) {
+        num++;
+        const e = {num:num, harm:harm.n, cat:harm.c, swap:SWAPS[s], ctx:CONTEXTS[x]};
+        e.text = (harm.n + " " + SWAPS[s] + " " + CONTEXTS[x] + " " + harm.c).toLowerCase();
+        LIBRARY.push(e);
+      }
+    }
+  }
+})();
+
+const TOTAL = LIBRARY.length; /* expected: 50,000 */
+</script>
+
+<script>
+/* ============ Rendering & interaction ============ */
+const searchEl = document.getElementById('search');
+const sortEl = document.getElementById('sort');
+const cardsWrap = document.getElementById('cards');
+const tabsWrap = document.getElementById('tabs');
+const countline = document.getElementById('countline');
+const loadBtn = document.getElementById('loadMore');
+const PAGE = 48;
+let activeFilter = 'All';
+let filtered = LIBRARY;
+let shown = 0;
+let waitingForMore = false;
+
+document.getElementById('totalBadge').textContent = TOTAL.toLocaleString('en-US');
+document.getElementById('libTitle').innerHTML = TOTAL.toLocaleString('en-US') + ' green words.<br>One greener world.';
+
+/* category tabs */
+const allTabs = [['All','All topics']].concat(CAT_ORDER.map(function(c){return [c, c + (c==='Poison' ? ' & chemicals' : c==='Trees' ? ' & land' : c==='Wood' ? ' & beds & furniture' : c==='Buildings' ? ' & cities' : c==='Sleep' ? ' & wellbeing' : '')] }));
+allTabs.forEach(function(pair){
+  const b = document.createElement('button');
+  b.className = 'tab' + (pair[0] === 'All' ? ' active' : '');
+  b.textContent = pair[1];
+  b.dataset.filter = pair[0];
+  b.addEventListener('click', function(){
+    tabsWrap.querySelectorAll('.tab').forEach(function(t){t.classList.toggle('active', t === b);});
+    activeFilter = pair[0];
+    refilter();
+  });
+  tabsWrap.appendChild(b);
+});
+
+function esc(s){const d=document.createElement('span');d.textContent=s;return d.innerHTML;}
+
+function card(e){
+  const art = document.createElement('article');
+  art.className = 'card';
+  art.innerHTML = '<div class="card-top"><span class="tag">' + esc(e.cat) + '</span><span class="num">#' + e.num.toLocaleString('en-US') + ' of ' + TOTAL.toLocaleString('en-US') + '</span></div>'
+    + '<h3>Instead of ' + esc(e.harm) + '</h3>'
+    + '<p class="swap"><strong>Try:</strong> ' + esc(e.swap) + ' alternative — for ' + esc(e.ctx) + '.</p>';
+  return art;
+}
+
+function refilter(){
+  const q = searchEl.value.trim().toLowerCase();
+  let list = LIBRARY;
+  if (activeFilter !== 'All') list = list.filter(function(e){return e.cat === activeFilter;});
+  if (q) list = list.filter(function(e){return e.text.indexOf(q) !== -1;});
+  if (sortEl.value === 'az') {
+    list = list.slice().sort(function(a,b){return a.harm.localeCompare(b.harm) || a.num - b.num;});
+    if (q) list = list.slice().sort(function(a,b){return a.harm.localeCompare(b.harm);});
+  }
+  filtered = list;
+  cardsWrap.innerHTML = '';
+  shown = 0;
+  appendPage();
+}
+
+function appendPage(){
+  const slice = filtered.slice(shown, shown + PAGE);
+  const frag = document.createDocumentFragment();
+  slice.forEach(function(e){frag.appendChild(card(e));});
+  cardsWrap.appendChild(frag);
+  shown += slice.length;
+  countline.textContent = 'Showing ' + shown.toLocaleString('en-US') + ' of ' + filtered.length.toLocaleString('en-US') + ' green alternatives' + (activeFilter === 'All' ? '' : ' in ' + activeFilter);
+  loadBtn.parentElement.style.display = shown < filtered.length ? 'block' : 'none';
+  if (waitingForMore && shown < filtered.length) { waitingForMore = false; appendPage(); }
+}
+
+let debounce;
+searchEl.addEventListener('input', function(){clearTimeout(debounce); debounce = setTimeout(refilter, 120);});
+sortEl.addEventListener('change', refilter);
+loadBtn.addEventListener('click', function(){
+  waitingForMore = true;
+  appendPage();
+});
+refilter();
+
+/* pledge */
+document.getElementById('pledge').addEventListener('click', function(){
+  document.getElementById('pledgeMessage').textContent = 'Your pledge: I will pick one alternative from the 50,000 and make it my new habit this week. Start small, keep going, share what works.';
+  document.getElementById('pledge').textContent = '✓ Pledge made';
+});
+</script>
+</body>
+</html>
