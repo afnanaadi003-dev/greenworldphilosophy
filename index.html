@@ -77,6 +77,22 @@ main{max-width:1180px;margin:auto;padding:0 24px}
 .footer small{color:#a8c0ad}
 .toplink{color:var(--lime);text-decoration:none}
 #pledgeMessage{font-weight:800;margin-top:16px}
+.card.clickable{cursor:pointer;transition:transform .12s,box-shadow .12s,border-color .12s}
+.card.clickable:hover,.card.clickable:focus-visible{transform:translateY(-2px);box-shadow:0 8px 22px #00000014;border-color:#b9d4b6;outline:none}
+.card:focus-visible{border-color:var(--leaf);box-shadow:0 0 0 3px #28734a33}
+.modal{position:fixed;inset:0;background:#0b281cd6;display:flex;align-items:center;justify-content:center;z-index:50;padding:20px}
+.modal[hidden]{display:none}
+.modal-box{background:var(--cream);border-radius:24px;max-width:560px;width:100%;max-height:88vh;overflow:auto;padding:20px 20px 24px;position:relative}
+.modal-box h2{font-size:1.3rem;line-height:1.3;margin:12px 0 10px}
+.modal-art{margin:-4px 0 12px}
+.modal-art svg{display:block;width:100%;height:auto;border-radius:16px}
+.modal-close{position:absolute;top:12px;right:12px;border:1px solid var(--line);background:#fff;border-radius:999px;width:34px;height:34px;font-size:1rem;cursor:pointer;font-weight:800;color:var(--ink)}
+.m-actions{display:flex;gap:10px;margin:12px 0 18px;flex-wrap:wrap}
+.m-more{font-weight:800;font-size:.86rem;color:var(--muted);margin:0 0 10px}
+.m-chips{display:flex;flex-wrap:wrap;gap:8px;max-height:170px;overflow:auto;padding:2px}
+.chip{border:1px solid var(--line);background:#fff;border-radius:999px;padding:6px 12px;font-size:.78rem;font-weight:700;cursor:pointer;color:var(--ink);font-family:inherit}
+.chip:hover{border-color:var(--leaf)}
+.chip.active{background:var(--forest);color:#fff;border-color:var(--forest)}
 @media(max-width:850px){.pillars,.grid{grid-template-columns:repeat(2,1fr)}.manifesto{grid-template-columns:1fr}.steps{grid-template-columns:repeat(2,1fr)}nav{gap:10px}.nav{align-items:flex-start;flex-direction:column}}
 @media(max-width:560px){.pillars,.grid,.steps{grid-template-columns:1fr}.hero{padding-top:60px}.section-head{display:block}.nav{position:relative}.cta{align-items:flex-start;flex-direction:column}}
 </style>
@@ -413,11 +429,18 @@ function esc(s){const d=document.createElement('span');d.textContent=s;return d.
 
 function card(e){
   const cardBox = document.createElement('article');
-  cardBox.className = 'card';
+  cardBox.className = 'card clickable';
+  cardBox.tabIndex = 0;
+  cardBox.setAttribute('role','button');
+  cardBox.setAttribute('aria-label','Open details: instead of ' + e.harm + ', try ' + e.swap + ' for ' + e.ctx);
   cardBox.innerHTML = '<div class="thumb" role="img" aria-label="Illustration: ' + esc(e.swap) + ' alternative instead of ' + esc(e.harm) + '">' + cardArt(e) + '</div>'
     + '<div class="card-top"><span class="tag">' + esc(e.cat) + '</span><span class="num">#' + e.num.toLocaleString('en-US') + ' of ' + TOTAL.toLocaleString('en-US') + '</span></div>'
     + '<h3>Instead of ' + esc(e.harm) + '</h3>'
     + '<p class="swap"><strong>Try:</strong> ' + esc(e.swap) + ' alternative — for ' + esc(e.ctx) + '.</p>';
+  cardBox.addEventListener('click', function(){ openModal(e); });
+  cardBox.addEventListener('keydown', function(ev){
+    if (ev.key === 'Enter' || ev.key === ' ') { ev.preventDefault(); openModal(e); }
+  });
   return cardBox;
 }
 
@@ -460,6 +483,72 @@ refilter();
 document.getElementById('pledge').addEventListener('click', function(){
   document.getElementById('pledgeMessage').textContent = 'Your pledge: I will pick one alternative from the 50,000 and make it my new habit this week. Start small, keep going, share what works.';
   document.getElementById('pledge').textContent = '✓ Pledge made';
+});
+
+/* ============ Detail modal ============ */
+const modal = document.createElement('div');
+modal.className = 'modal';
+modal.id = 'modal';
+modal.hidden = true;
+modal.innerHTML = '<div class="modal-box" role="dialog" aria-modal="true" aria-label="Alternative details">'
+  + '<button class="modal-close" id="mClose" aria-label="Close details">✕</button>'
+  + '<div class="modal-art" id="mArt"></div>'
+  + '<div class="card-top"><span class="tag" id="mTag"></span><span class="num" id="mNum"></span></div>'
+  + '<h2 id="mTitle"></h2>'
+  + '<p class="swap" id="mSwap"></p>'
+  + '<div class="m-actions"><button class="btn primary" id="mCopy">⧉ Copy this alternative</button><button class="btn ghost" id="mSearchTopic" style="border:1px solid var(--line);color:var(--forest)">🔎 Search this topic</button></div>'
+  + '<p class="m-more">More ways to replace the same harmful thing — click a green word:</p>'
+  + '<div class="m-chips" id="mChips"></div></div>';
+document.body.appendChild(modal);
+let currentEntry = null;
+function openModal(e){
+  currentEntry = e;
+  document.getElementById('mArt').innerHTML = cardArt(e);
+  document.getElementById('mTag').textContent = e.cat;
+  document.getElementById('mNum').textContent = '#' + e.num.toLocaleString('en-US') + ' of ' + TOTAL.toLocaleString('en-US');
+  document.getElementById('mTitle').textContent = 'Instead of ' + e.harm;
+  document.getElementById('mSwap').innerHTML = '<strong>Try:</strong> ' + esc(e.swap) + ' alternative — for ' + esc(e.ctx) + '.';
+  const chips = document.getElementById('mChips');
+  chips.innerHTML = '';
+  SWAPS.forEach(function(swapName){
+    const b = document.createElement('button');
+    b.className = 'chip' + (swapName === e.swap ? ' active' : '');
+    b.textContent = swapName;
+    b.addEventListener('click', function(){
+      const target = LIBRARY.find(function(x){return x.harm === e.harm && x.swap === swapName && x.ctx === e.ctx;});
+      if (target) openModal(target);
+    });
+    chips.appendChild(b);
+  });
+  modal.hidden = false;
+  document.body.style.overflow = 'hidden';
+  document.getElementById('mClose').focus();
+}
+function closeModal(){
+  modal.hidden = true;
+  document.body.style.overflow = '';
+}
+document.getElementById('mClose').addEventListener('click', closeModal);
+modal.addEventListener('click', function(ev){ if (ev.target === modal) closeModal(); });
+document.addEventListener('keydown', function(ev){ if (ev.key === 'Escape' && !modal.hidden) closeModal(); });
+document.getElementById('mCopy').addEventListener('click', function(){
+  const text = 'Instead of ' + currentEntry.harm + ', try: ' + currentEntry.swap + ' alternative (' + currentEntry.ctx + ') — GreenWorld ♻️';
+  const btn = document.getElementById('mCopy');
+  function done(){ btn.textContent = '✓ Copied'; setTimeout(function(){ btn.textContent = '⧉ Copy this alternative'; }, 1600); }
+  if (navigator.clipboard && navigator.clipboard.writeText) navigator.clipboard.writeText(text).then(done).catch(function(){ fallCopy(text, done); });
+  else fallCopy(text, done);
+});
+function fallCopy(text, done){
+  const ta = document.createElement('textarea');
+  ta.value = text; document.body.appendChild(ta); ta.select();
+  try { document.execCommand('copy'); done(); } catch (err) {}
+  document.body.removeChild(ta);
+}
+document.getElementById('mSearchTopic').addEventListener('click', function(){
+  closeModal();
+  searchEl.value = currentEntry.harm;
+  refilter();
+  document.getElementById('library').scrollIntoView({behavior:'smooth'});
 });
 </script>
 </body>
