@@ -82,10 +82,15 @@ main{max-width:1180px;margin:auto;padding:0 24px}
 .card:focus-visible{border-color:var(--leaf);box-shadow:0 0 0 3px #28734a33}
 .modal{position:fixed;inset:0;background:#0b281cd6;display:flex;align-items:center;justify-content:center;z-index:50;padding:20px}
 .modal[hidden]{display:none}
-.modal-box{background:var(--cream);border-radius:24px;max-width:560px;width:100%;max-height:88vh;overflow:auto;padding:20px 20px 24px;position:relative}
-.modal-box h2{font-size:1.3rem;line-height:1.3;margin:12px 0 10px}
-.modal-art{margin:-4px 0 12px}
+.modal-box{background:var(--cream);border-radius:24px;max-width:560px;width:100%;max-height:88vh;overflow:auto;padding:22px 22px 26px;position:relative}
+.modal-box h2{font-size:clamp(1.35rem,3.4vw,1.7rem);line-height:1.25;letter-spacing:-.02em;margin:10px 0 14px}
+.modal-art{margin:-4px 0 14px}
 .modal-art svg{display:block;width:100%;height:auto;border-radius:16px}
+.m-sec{margin:0 0 14px}
+.m-label{display:block;font-size:.7rem;letter-spacing:.12em;text-transform:uppercase;color:var(--leaf);font-weight:900;margin:0 0 4px}
+.m-value{font-size:1.08rem;line-height:1.6;color:var(--ink);margin:0;font-family:inherit}
+.m-value .place{display:inline-block;background:#e8f3e3;color:#245b38;border-radius:999px;padding:2px 12px;font-size:.85rem;font-weight:800;margin-left:8px;vertical-align:middle}
+.num{font-size:.72rem;color:#9db0a2;font-weight:700;white-space:nowrap}
 .modal-close{position:absolute;top:12px;right:12px;border:1px solid var(--line);background:#fff;border-radius:999px;width:34px;height:34px;font-size:1rem;cursor:pointer;font-weight:800;color:var(--ink)}
 .m-actions{display:flex;gap:10px;margin:12px 0 18px;flex-wrap:wrap}
 .m-more{font-weight:800;font-size:.86rem;color:var(--muted);margin:0 0 10px}
@@ -293,6 +298,20 @@ const SWAPS = [
 
 const CONTEXTS = ["home","kitchen","garden","school","office","workshop","bathroom","bedroom","travel","farm"];
 
+/* Why each alternative helps — keeps the detail dialog informative and readable */
+const CAT_WHY = {
+ Trees:"Every tree kept standing stores carbon, holds soil, shelters wildlife, cleans the air, and cools the land around it.",
+ Poison:"Botanical and gentle options break down safely instead of leaving toxins in your air, soil, and drinking water.",
+ Plastic:"Durable natural and refillable options cut the plastic waste that outlives all of us in landfills, rivers, and oceans.",
+ Wood:"Reusing timber and choosing fast-growing fibres keeps forests standing and avoids glue and chemical off-gassing indoors.",
+ Buildings:"Low-impact materials and thoughtful design cut construction pollution, waste, and energy use for decades of use.",
+ Sleep:"Natural materials and calm evening routines support sleep gently. If you use prescribed sleep medicine, change nothing without your clinician's advice.",
+ Energy:"Cutting wasted energy and switching to renewable power lowers bills and the carbon we put in the air.",
+ Water:"Every drop saved protects rivers, groundwater, and the energy needed to pump, heat, and treat water.",
+ Food:"Seasonal, lower-waste food keeps soil healthy, cuts transport pollution, and keeps scraps out of landfill methane.",
+ Clothes:"Longer-wearing natural fabrics mean less dye pollution, fewer microplastics in waterways, and less landfill.",
+ Waste:"Sorting, composting, and recycling turn thrown-away things into resources instead of smoke, toxins, and leachate."};
+
 const CAT_ORDER = ["Trees","Poison","Plastic","Wood","Buildings","Sleep","Energy","Water","Food","Clothes","Waste"];
 
 /* Build the full 50,000-entry library */
@@ -495,8 +514,11 @@ modal.innerHTML = '<div class="modal-box" role="dialog" aria-modal="true" aria-l
   + '<div class="modal-art" id="mArt"></div>'
   + '<div class="card-top"><span class="tag" id="mTag"></span><span class="num" id="mNum"></span></div>'
   + '<h2 id="mTitle"></h2>'
-  + '<p class="swap" id="mSwap"></p>'
-  + '<div class="m-actions"><button class="btn primary" id="mCopy">⧉ Copy this alternative</button><button class="btn ghost" id="mSearchTopic" style="border:1px solid var(--line);color:var(--forest)">🔎 Search this topic</button></div>'
+  + '<div class="m-sec"><span class="m-label">Instead of</span><p class="m-value" id="mHarm"></p></div>'
+  + '<div class="m-sec"><span class="m-label">Try this instead</span><p class="m-value" id="mSwap"></p></div>'
+  + '<div class="m-sec"><span class="m-label">Where</span><p class="m-value"><span class="place" id="mPlace"></span></p></div>'
+  + '<div class="m-sec"><span class="m-label">Why it helps</span><p class="m-value" id="mWhy"></p></div>'
+  + '<div class="m-actions"><button class="btn primary" id="mCopy">⧉ Copy this alternative</button><button class="btn primary" id="mSpeak">🔊 Listen</button><button class="btn ghost" id="mSearchTopic" style="border:1px solid var(--line);color:var(--forest)">🔎 Search this topic</button></div>'
   + '<p class="m-more">More ways to replace the same harmful thing — click a green word:</p>'
   + '<div class="m-chips" id="mChips"></div></div>';
 document.body.appendChild(modal);
@@ -507,7 +529,10 @@ function openModal(e){
   document.getElementById('mTag').textContent = e.cat;
   document.getElementById('mNum').textContent = '#' + e.num.toLocaleString('en-US') + ' of ' + TOTAL.toLocaleString('en-US');
   document.getElementById('mTitle').textContent = 'Instead of ' + e.harm;
-  document.getElementById('mSwap').innerHTML = '<strong>Try:</strong> ' + esc(e.swap) + ' alternative — for ' + esc(e.ctx) + '.';
+  document.getElementById('mHarm').textContent = e.harm.charAt(0).toUpperCase() + e.harm.slice(1) + '.';
+  document.getElementById('mSwap').innerHTML = '<strong>' + esc(e.swap.charAt(0).toUpperCase() + e.swap.slice(1)) + '</strong> — a greener way to do the same job.';
+  document.getElementById('mPlace').textContent = e.ctx.charAt(0).toUpperCase() + e.ctx.slice(1);
+  document.getElementById('mWhy').textContent = CAT_WHY[e.cat] || '';
   const chips = document.getElementById('mChips');
   chips.innerHTML = '';
   SWAPS.forEach(function(swapName){
@@ -544,6 +569,17 @@ function fallCopy(text, done){
   try { document.execCommand('copy'); done(); } catch (err) {}
   document.body.removeChild(ta);
 }
+const speakBtn = document.getElementById('mSpeak');
+const speakPhrase = 'Hi Green World! Instead of what is bad, here is a green word: Instead of ';
+speakBtn.addEventListener('click', function(){
+  if (!('speechSynthesis' in window)) { speakBtn.textContent = '🔇 Not supported'; return; }
+  const synth = window.speechSynthesis;
+  if (synth.speaking || synth.pending) { synth.cancel(); speakBtn.textContent = '🔊 Listen'; return; }
+  const u = new SpeechSynthesisUtterance(speakPhrase + currentEntry.harm + ', try the ' + currentEntry.swap + ' alternative, for ' + currentEntry.ctx + '. ' + (CAT_WHY[currentEntry.cat] || ''));
+  u.rate = 0.95; u.onend = function(){ speakBtn.textContent = '🔊 Listen'; };
+  speakBtn.textContent = '⏹ Stop';
+  synth.speak(u);
+});
 document.getElementById('mSearchTopic').addEventListener('click', function(){
   closeModal();
   searchEl.value = currentEntry.harm;
