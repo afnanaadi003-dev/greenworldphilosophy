@@ -25,6 +25,7 @@ The library is generated live in the browser from three editable lists in `index
 100 × 50 × 10 = **exactly 50,000 entries**, shown 48 at a time with search (try "bed", "sleeping pill", "poison", "tree", "building", "wood", "plastic") and category tabs.
 
 ## Features
+- A unique generative SVG illustration on every one of the 50,000 cards (seeded from category + harmful thing + swap + place, themed per category — trees, poison, sleep, buildings…)
 - Mission, vision, and philosophy sections
 - Searchable 50,000-alternative library with category filters, A–Z sorting, and load-more paging
 - Responsive mobile layout
